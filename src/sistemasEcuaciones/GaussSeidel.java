@@ -20,7 +20,10 @@ public class GaussSeidel {
         double m[][] = new double[tam][tam+1];
         
         j.ingreso(m, tam, tam+1);
-        j.calculo(tam, m,error );
+        if(j.dominante(m))
+            j.calculo(tam, m,error );
+        else
+            System.out.println("La matriz no es dominante");
     }
     
     public void ingreso(double m[][],int filas, int col){
@@ -30,6 +33,20 @@ public class GaussSeidel {
                         j < filas ? "ingrese x" + j : "ingrese la constante"));
             }
         }
+    }
+    
+    public boolean dominante(double m[][]){
+        int suma;
+        for (int i = 0; i < m.length; i++) {
+            suma = 0;
+            for (int j = 0; j < m[0].length; j++) {
+                if(i != j)
+                    suma += Math.abs(m[i][j]);
+            }
+            if(m[i][i] < suma )
+                return false;
+        }
+        return true;
     }
     
     public double[] calculo(int tam, double m[][], double error){

@@ -27,7 +27,7 @@ public class Raices {
     }
 
     private double funcion(double x) {
-        return Math.pow(x, 3) - 3 * x + 1;
+        return Math.pow(x, 2) - 16;
     }
 
     private double derivada(double x) {
@@ -56,7 +56,7 @@ public class Raices {
 
         while (errorAbs > error) {
             impresion(a, fa, b, fb, m, fm);
-            if ((fa * fm) > 0) {
+            if ((fa * fm) >= 0) {
                 a = m;
                 fa = fm;
             } else {
@@ -101,16 +101,16 @@ public class Raices {
     }
 
     private double[] secante(double a, double b, double error) {
-        double fa, fm, errorAbs = 100, m, fb, mAnt;
+        double fa, fm, errorAbs, m, fb, mAnt;
 
         fa = funcion(a);
         fb = funcion(b);
-        m = (a * fb - b * fa) / (fa - fb);
+        m = b - (((b - a) * fb ) / (fb - fa)); 
         fm = funcion(m);
 
         System.out.println(" a   |   fa   |   b   |   fb   |   m   |   fm   ");
 
-        while (errorAbs > error) {
+        do {
             mAnt = m;
             impresion(a, fa, b, fb, m, fm);
             a = b;
@@ -119,11 +119,11 @@ public class Raices {
             fa = fb;
             fb = fm;
 
-            m = (a * fb - b * fa) / (fb - fa);
+            m = b - (((b - a) * fb ) / (fb - fa)); 
             fm = funcion(m);
 
             errorAbs = Math.abs((m - mAnt) / m) * 100;
-        }
+        }while (errorAbs > error);
         return new double[]{m, errorAbs};
     }
 
